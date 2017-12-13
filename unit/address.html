@@ -63,7 +63,7 @@
         <div class="addr-list-wrap">
           <div class="addr-list">
             <ul>
-              <li v-for="(item, index) in limitAddressList" :class="{check: index==currentIndex}"  @click="currentIndex=index">
+              <li v-for="(item,index) in addressLimit" :class="{check:currentItem===index}" @click="checkCurrent(index)">
                 <dl>
                   <dt>{{item.userName}}</dt>
                   <dd class="address">{{item.streetName}}</dd>
@@ -74,13 +74,13 @@
                     <svg class="icon icon-edit"><use xlink:href="#icon-edit"></use></svg>
                   </a>
                 </div>
-                <div class="addr-opration addr-del">
+                <div class="addr-opration addr-del" @click="delConfirm(index)">
                   <a href="javascript:;" class="addr-del-btn">
                     <svg class="icon icon-del"><use xlink:href="#icon-del"></use></svg>
                   </a>
                 </div>
-                <div class="addr-opration addr-set-default" v-if="!item.isDefault" @click="setDefault(item.addressId)">
-                  <a href="javascript:;" class="addr-set-default-btn" ><i>设为默认</i></a>
+                <div class="addr-opration addr-set-default">
+                  <a href="javascript:;" class="addr-set-default-btn" v-if="!item.isDefault" @click="setDefault(item)"><i>设为默认</i></a>
                 </div>
                 <div class="addr-opration addr-default" v-if="item.isDefault">默认地址</div>
               </li>
@@ -97,7 +97,7 @@
           </div>
 
           <div class="shipping-addr-more">
-            <a class="addr-more-btn up-down-btn" href="javascript:" @click="limitNum=addressList.length">
+            <a class="addr-more-btn up-down-btn" href="javascript:" @click=" limitNum=addressList.length ">
               more
               <i class="i-up-down">
                 <i class="i-up-down-l"></i>
@@ -114,11 +114,11 @@
         <div class="shipping-method-wrap">
           <div class="shipping-method">
             <ul>
-              <li :class="{check: shipValue==1}" @click="shipValue=1">
-                <div class="name" >标准配送</div>
+              <li :class="{check:shippingFlag==1}" @click="shippingFlag=1">
+                <div class="name">标准配送</div>
                 <div class="price">Free</div>
               </li>
-              <li :class="{check: shipValue==2}" @click="shipValue=2" >
+              <li :class="{check:shippingFlag==2}" @click="shippingFlag=2">
                 <div class="name">高级配送</div>
                 <div class="price">180</div>
               </li>
@@ -128,18 +128,19 @@
         <div class="next-btn-wrap">
           <a href="javascript:;" class="btn btn--red">下一步</a>
         </div>
-        <div class="md-modal modal-msg md-modal-transition" id="showModal">
+        <div class="md-overlay" id="showOverLay" v-if="delFlag" @click="delFlag=false"></div>
+        <div class="md-modal modal-msg md-modal-transition" id="showModal" :class="{'md-show':delFlag}">
           <div class="md-modal-inner">
             <div class="md-top">
-              <button class="md-close">关闭</button>
+              <button class="md-close"  @click="delFlag=false">关闭</button>
             </div>
             <div class="md-content">
               <div class="confirm-tips">
                 <p id="cusLanInfo">你确认删除此配送地址信息吗?</p>
               </div>
               <div class="btn-wrap col-2">
-                <button class="btn btn--m" id="btnModalConfirm">Yes</button>
-                <button class="btn btn--m btn--red" id="btnModalCancel">No</button>
+                <button class="btn btn--m" id="btnModalConfirm" @click="deleteAddress()">Yes</button>
+                <button class="btn btn--m btn--red" id="btnModalCancel"  @click="delFlag=false">No</button>
               </div>
             </div>
           </div>
@@ -195,8 +196,8 @@
     </div>
   </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<!--     <script src="js/lib/vue.min.js"></script> -->
+
+    <script src="js/lib/vue.js"></script>
     <script src="js/lib/vue-resource.js"></script>
     <script src="js/address.js"></script>
 </body>

@@ -1,81 +1,105 @@
+Vue.filter("formatMoney2", function(v,type){
+	return "￥" + v.toFixed(2) + type;
+});
 var vm = new Vue({
-	el:"#app",
-	data:{
-		productList:[],
+	el: "#app",
+	data: {
 		totalMoney:0,
-		checkAllFlag:false,
+		productList:[],
+		checkCount:0,
+		checkAllFlag: false,
 		delFlag:false,
-		curProduce:''
+		currentProduct:"",
+		pindex:"",
 	},
-	filters:{
-		formatMoney:function(value){
-			return "￥ " + value.toFixed(2);
+	filters: {
+		formatMoney: function(v){
+			return "￥" + v.toFixed(2);
 		}
-
 	},
-	mounted:function(){
-		this.$nextTick(function(){
-			this.cartView();
-		});
+	mounted: function(){
+		this.$nextTick(function () {
+	    	this.cartView();
+	  })
 		
 	},
-	methods:{
+	methods: {
 		cartView: function(){
-			var _this = this;
-			 this.$http.get("data/cartData.json").then(function(res){
-			 	_this.productList = res.data.result.list;
-			 });
+			var _this=this;
+			this.$http.get("data/cartData.json", {"id":123}).then(function(res){
+				_this.productList = res.data.result.list;
+			});
 		},
 		changeMoney: function(product, way){
 			if(way>0){
 				product.productQuantity++;
 			}else{
-				product.productQuantity--;
-				if(product.productQuantity<1){
-					product.productQuantity = 1;
+				if(product.productQuantity>1){
+					product.productQuantity--;
 				}
-			}
-			this.calcTotalPrice();
+			};
+			this.calcTotalMoney();
 		},
-		selectProduct:function(item){
-			if(typeof item.checked == 'undefined'){
-				Vue.set(item, 'checked', true);
+		selectedProduct: function(item){
+			if(typeof item.check == 'undefined'){
+				Vue.set(item,"check",true);
 			}else{
-				item.checked = !item.checked;
+				item.check = !item.check;
+			};
+			if(item.check){
+				var _this = this;
+				this.checkCount++;
+				if(this.checkCount == this.productList.length){
+					_this.checkAllFlag=true
+				}
+			}else{
+				this.checkCount--;
+				this.checkAllFlag=false;
 			}
-			this.calcTotalPrice();
+			this.calcTotalMoney();
 		},
-		checkAll:function(){
-			this.checkAllFlag = !this.checkAllFlag;
-			var _this = this;
-			this.productList.forEach(function(item,index){
-				if(typeof item.checked == 'undefined'){
-					Vue.set(item, 'checked', true);
+		checkAll: function(flag){
+			if(flag){
+				this.checkAllFlag = !this.checkAllFlag;
+				var _this=this;
+				if(this.checkAllFlag){
+					_this.checkCount =_this.productList.length;
 				}else{
-					item.checked = _this.checkAllFlag;
+					_this.checkCount = 0;
+				}
+			}else{
+				this.checkCount=0;
+				this.checkAllFlag = flag;
+			};			
+			var _this=this;
+			this.productList.forEach(function(v,i){
+				if(typeof v.check == 'undefined'){
+					Vue.set(v,"check",_this.checkAllFlag);
+				}else{
+					v.check = _this.checkAllFlag;
 				}
 			});
-			this.calcTotalPrice();
+			this.calcTotalMoney();
+
 		},
-		calcTotalPrice: function(){
+		calcTotalMoney: function(){
 			this.totalMoney = 0;
 			var _this = this;
-			this.productList.forEach(function(item,index){
-				if(item.checked){
-					_this.totalMoney += item.productPrice*item.productQuantity;
+			this.productList.forEach(function(v,i){
+				if(v.check){
+					_this.totalMoney +=v.productQuantity*v.productPrice;
 				}
-			});
+			})
 		},
-		delConfirm:function(item){
+		delConfirm: function(i){
 			this.delFlag = true;
-			this.curProduce = item;
-			
+			this.currentProduct = i;
 		},
-		delProduct:function(){
-			var index = this.productList.indexOf(this.curProduce);
+		delProduct: function(){
+			var index = this.productList.indexOf(this.currentProduct);
 			this.productList.splice(index,1);
 			this.delFlag = false;
 		}
 	}
+});
 
-})
