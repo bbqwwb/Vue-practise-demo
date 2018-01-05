@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>v-if&v-else&v-show</title>
+<script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>v-if&v-else&v-show实例</h1>
+    <hr>
+	<div id="app">
+		<div v-if="is">你好</div>
+		<div v-else>呵呵</div>
+		<div v-show="show">....</div>
+	</div>
+	
+<script>
+	var app = new Vue({
+		el:"#app",
+		data:{
+			is:true,
+			show:true
+		}
+	})
+</script>
+</body>
+</html>
