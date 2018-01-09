@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Vue.directive自定义指令</title>
+<script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>Vue.directive自定义指令</h1>
+    <hr>
+	<div id="app">
+		<p>{{num}}</p>
+		<button @click="add">ADD</button>
+	</div>
+<script>
+	var app = new Vue({
+		el:"#app",
+		data:{
+			num:10
+		},
+		methods:{
+			add:function(){
+				this.num++;
+			}
+		}
+	})
+</script>
+</body>
+</html>

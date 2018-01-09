@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>v-pre&v-cloak&v-once</title>
+<script src="../assets/js/vue.js"></script>
+<style type="text/css" media="screen">
+[v-cloak] {
+  display: none;
+}
+</style>
+</head>
+<body>
+    <h1>v-pre&v-cloak&v-once实例</h1>
+    <hr>
+	<div id="app">
+		<div v-pre>{{message}}</div>
+		<div v-cloak>渲染完成后才显示</div><!-- 在vue渲染完指定的整个DOM后才进行显示。它必须和CSS样式一起使用 -->
+		<div v-once>第一次绑定的值{{message}}</div>
+		<input type="text" v-model="message">
+		<div>{{message}}</div>
+	</div>
+<script>
+	var app = new Vue({
+		el:"#app",
+		data:{
+			message:"helloworld!!!!"
+		}
+	})
+</script>
+</body>
+</html>

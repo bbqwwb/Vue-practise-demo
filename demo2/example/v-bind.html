@@ -21,15 +21,16 @@
 		<p><img v-bind:src="imgurl" alt=""></p>
 		<p><a :href="linkurl" target="_blank">教程</a></p>
 		<hr>
-		<div :class="className">1.绑定Class</div>
-		<div :class="{classA:isOk}">2.绑定Class中的判断</div>
+		<div :class="className">1.直接绑定Class</div>
+		<div :class="{classA:isOk}">2.绑定Class并进行判断</div>
 		<div :class="[classA,classB]">3.绑定Class中的数组</div>
-		<div :class="isOk?classA:classB">4.绑定Class中的三元运算</div>
+		<div :class="isOk?classA:classB">4.绑定Class中使用三元运算</div>
 		<div>
 			<input type="checkbox" id="checkOk" v-model="isOk">
 			<label for="checkOk">isOk={{isOk}}</label>
 		</div>
 		<div :style="{color:red,fontSize:font}">5.绑定Style</div><!-- 不能写font-size  会报错 用驼峰式会转化为横杠 -->
+		<div :style="styleObject">6.对象绑定Style</div>
 	</div>
 <script>
 	var app = new Vue({
@@ -42,7 +43,11 @@
 			classA:"classA",
 			classB:"classB",
 			red:"red",
-			font:"25px"
+			font:"25px",
+			styleObject:{
+				color:"red",
+				fontSize:"50px" // 不能写font-size  会报错 用驼峰式会转化为横杠
+			}
 		}
 	})
 </script>
