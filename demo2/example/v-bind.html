@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>v-bind</title>
+<script src="../assets/js/vue.js"></script>
+<style type="text/css" media="screen">
+	.classA{
+		color: red;
+	}
+	.classB{
+		font-size: 150%;
+	}
+</style>
+</head>
+<body>
+    <h1>v-bind实例</h1>
+    <hr>
+	<div id="app">
+		<p><img v-bind:src="imgurl" alt=""></p>
+		<p><a :href="linkurl" target="_blank">教程</a></p>
+		<hr>
+		<div :class="className">1.绑定Class</div>
+		<div :class="{classA:isOk}">2.绑定Class中的判断</div>
+		<div :class="[classA,classB]">3.绑定Class中的数组</div>
+		<div :class="isOk?classA:classB">4.绑定Class中的三元运算</div>
+		<div>
+			<input type="checkbox" id="checkOk" v-model="isOk">
+			<label for="checkOk">isOk={{isOk}}</label>
+		</div>
+		<div :style="{color:red,fontSize:font}">5.绑定Style</div><!-- 不能写font-size  会报错 用驼峰式会转化为横杠 -->
+	</div>
+<script>
+	var app = new Vue({
+		el:"#app",
+		data:{
+			imgurl:"http://7xjyw1.com1.z0.glb.clouddn.com/dashang30.jpg",
+			linkurl:"http://jspang.com/2017/04/10/vue-cli/",
+			className:"classA",
+			isOk:true,
+			classA:"classA",
+			classB:"classB",
+			red:"red",
+			font:"25px"
+		}
+	})
+</script>
+</body>
+</html>
