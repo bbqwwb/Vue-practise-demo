@@ -14,11 +14,17 @@
 		<button @click="add">ADD</button>
 	</div>
 <script>
+	Vue.directive("bbqwwb",function(el,binding,vnode){
+		// console.log(el);
+		// console.log(binding);
+		// console.log(vnode);
+		el.style.cssText="color:"+binding.value;
+	})
 	var app = new Vue({
 		el:"#app",
 		data:{
 			num:10,
-			color:"green"
+			color:"red"
 		},
 		methods:{
 			add:function(){
