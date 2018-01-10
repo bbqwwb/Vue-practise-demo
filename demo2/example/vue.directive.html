@@ -19,7 +19,27 @@
 		// console.log(binding);
 		// console.log(vnode);
 		el.style.cssText="color:"+binding.value;
-	})
+	});
+
+	// Vue.directive("bbqwwb",{
+	// 	bind:function(){//被绑定
+	// 	     console.log('1 - bind');
+	// 	},
+	// 	inserted:function(){//绑定到节点
+	// 	      console.log('2 - inserted');
+	// 	},
+	// 	update:function(){//组件更新
+	// 	      console.log('3 - update');
+	// 	},
+	// 	componentUpdated:function(){//组件更新完成
+	// 	      console.log('4 - componentUpdated');
+	// 	},
+	// 	unbind:function(){//解绑
+	// 	      console.log('5 - unbind');
+	// 	}
+	// });
+
+
 	var app = new Vue({
 		el:"#app",
 		data:{
@@ -31,7 +51,7 @@
 				this.num++;
 			}
 		}
-	})
+	});
 </script>
 </body>
 </html>
