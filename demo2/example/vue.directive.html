@@ -12,6 +12,7 @@
 	<div id="app">
 		<p v-bbqwwb="color">{{num}}</p>
 		<button @click="add">ADD</button>
+		<button onclick="unbind()">解绑</button>
 	</div>
 <script>
 	Vue.directive("bbqwwb",function(el,binding,vnode){
@@ -38,7 +39,9 @@
 	// 	      console.log('5 - unbind');
 	// 	}
 	// });
-
+	function unbind(){
+		app.$destroy();
+	}
 
 	var app = new Vue({
 		el:"#app",
