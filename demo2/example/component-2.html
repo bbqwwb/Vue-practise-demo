@@ -10,27 +10,21 @@
     <h1>component-1</h1>
     <hr>
 	<div id="app">
-		<bbqwwb></bbqwwb>
-		<bbq></bbq>
-	</div>
-	<div id="pp">
-		<bbqwwb></bbqwwb>
-		<bbq></bbq>
+		<bbqwwb from-here="China"></bbqwwb>
+		<bbqwwb :from-here="message"></bbqwwb>
 	</div>
 <script>
-	Vue.component('bbqwwb',{
-		template:`<div style="color:red">全局注册bbqwwb标签</div>`
-	})
 	var app = new Vue({
 		el:"#app",
+		data:{
+			message:"China2"
+		},
 		components:{
-			'bbq':{
-				template:`<div style="color:green">局部注册bbq标签</div>`
+			'bbqwwb':{
+				template:`<div style="color:green">from {{fromHere}}</div>`,//如果有-用小驼峰式
+				props:["fromHere"]
 			}
 		}
-	})
-	var pp = new Vue({
-		el:"#pp"
 	})
 </script>
 </body>
