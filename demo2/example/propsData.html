@@ -9,9 +9,24 @@
 <body>
     <h1>propsData Option</h1>
     <hr>
-
+	<header></header>
 <script>
-
+	var header_a = Vue.extend({
+		template:`
+			<div>I am {{messge}} {{a}}</div>
+		`,
+		data:function(){
+			return {
+				messge:'bbqwwb'
+			}
+		},
+		props:["a"]
+	});
+	new header_a({
+		propsData:{
+			a:"sdkljfsbi"
+		}
+	}).$mount('header');
 </script>
 </body>
 </html>
