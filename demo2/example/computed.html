@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>computed Option</title>
+<script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>computed Option</h1>
+    <hr>
+	<div id="app">
+		<p>{{newPrise}}</p>
+		<ul>
+			<li v-for="item in reverseNews">{{item.title}}-{{item.date}}</li>
+		</ul>
+	</div>
+<script>
+	var newsList = [
+		{title:"宪法必须随着实践发展而不断发展",date:"2018/1/2"},
+		{title:"国家监察体制改革是事关全局的重大政治体制改革",date:"2018/1/3"},
+		{title:"人民日报评论员：中国现行宪法是部好宪法 不忘初心",date:"2018/1/4"},
+		{title:"二中全会是伟大征程的关键蓄能站  新时代新气象",date:"2018/1/5"},
+		{title:"改善就医感受 500家县医院能力提升工程今年启动",date:"2018/1/6"},
+	]
+	var app = new Vue({
+		el:"#app",
+		data:{
+			price:100,
+			newsList:newsList,
+		},
+		computed:{
+			newPrise:function(){
+				return '￥'+ this.price +'元';
+			},
+			reverseNews:function(){
+				return this.newsList.reverse();
+			}
+		}
+	})
+</script>
+</body>
+</html>
