@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>extends Option</title>
+<script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>extends Option</h1>
+    <hr>
+	<div id="app">
+		<p>${num}</p>
+		<button @click="add">add</button>
+	</div>
+<script>
+	var extendsConsole = {
+		updated:function(){
+			console.log("我是扩展的updated");
+		},
+		methods:{
+			add:function(){
+				console.log("我是扩展的method");
+				this.num++;
+			}
+		}
+	}
+	var app = new Vue({
+		el:"#app",
+		data:{
+			num:1
+		},
+		methods:{
+			add:function(){
+				console.log("我是构造器里的method");
+				this.num++;
+			}
+		},
+		updated:function(){
+			console.log("我是构造器里的updated方法");
+		},
+		extends:extendsConsole,
+		delimiters:['${','}']
+	})
+</script>
+</body>
+</html>
