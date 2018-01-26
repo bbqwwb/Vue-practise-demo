@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>component-2 组件props 属性设置</title>
+<script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>component-2 组件props 属性设置</h1>
+    <hr>
+	<div id="app">
+		<bbqwwb from-here="China"></bbqwwb>
+		<bbqwwb :from-here="message"></bbqwwb>
+	</div>
+<script>
+	var app = new Vue({
+		el:"#app",
+		data:{
+			message:"sichaun"
+		},
+		components:{
+			'bbqwwb':{
+				template:`<div style="color:green">from {{fromHere}}</div>`,//如果有-用小驼峰式
+				props:["fromHere"]
+			}
+		}
+	})
+</script>
+</body>
+</html>

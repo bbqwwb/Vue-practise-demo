@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>methods Option</title>
+<script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>methods Option</h1>
+    <hr>
+	<div id="app">
+		{{a}}
+		<br>
+		<button @click="add(2)">add</button><br>
+		<btn @click.native="add"></btn>
+	</div>
+	<button onclick="app.add(10)">外部add</button>
+<script>
+	var btn = {
+		template:`<button>组件add</button>`
+	}
+	var app = new Vue({
+		el:"#app",
+		data:{
+			a:1
+		},
+		components:{
+			"btn":btn
+		},
+		methods:{
+			add:function(num){
+				if(num!='[object MouseEvent]'&&num!=null){
+					this.a += num;
+				}else{
+					this.a++;
+				}
+				
+			}
+		}
+	})
+</script>
+</body>
+</html>

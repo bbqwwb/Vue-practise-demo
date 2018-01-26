@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>vue.set全局操作</title>
+<script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>vue.set全局操作</h1>
+    <hr>
+	<div id="app">{{count}}
+	<ul>
+		<li v-for="item in arr">{{item}}</li>
+	</ul>
+	</div>
+	<p><button onclick="add()">add</button></p>
+	
+<script>
+	function add(){
+		// Vue.set(outData,"count",3);
+		// app.count++;
+		// outData.count++;
+		//app.arr[0]="cds" //由于Javascript的限制 1.当你利用索引直接设置一个项时，vue不会为我们自动更新 2.当你修改数组的长度时，vue不会为我们自动更新
+		Vue.set(app.arr,0,"dec");
+	}
+	var outData = {
+		count:1,
+		good:"car",
+		arr:["aaa","bbb","ccc"]
+	}
+	var app = new Vue({
+		el:"#app",
+		data:outData,
+	})
+</script>
+</body>
+</html>
