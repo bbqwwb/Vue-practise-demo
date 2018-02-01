@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>example methods Demo</title>
+<script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>example methods Demo</h1>
+    <hr>
+	<div id="app"></div>
+	<p><button onclick="destroy()">卸载整个挂载</button></p>
+	<p><button onclick="update()">update</button></p>
+	<p><button onclick="tick()">nextTick</button></p>
+<script>
+	var bbqwwb = Vue.extend({
+		template:`<p>{{message}}</p>`,
+		data:function(){
+			return {
+				message:"helo!!!"
+			}
+		},
+		mounted:function(){
+			console.log("mount 挂载");
+		},
+		destroyed:function(){
+			console.log("destroy 销毁");
+		},
+		updated:function(){
+			console.log("update 更新")
+		}
+	})
+	var vm = new bbqwwb().$mount("#app");
+	function destroy(){
+		vm.$destroy();
+	}
+	function update(){
+		vm.$forceUpdate();
+	}
+	function tick(){
+		vm.message = "message updated";
+		vm.$nextTick(function(){
+			console.log("message更新完后我被调用了")
+		})
+	}
+	
+</script>
+</body>
+</html>
