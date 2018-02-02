@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>内置组件-slot</title>
+<script src="../assets/js/vue.js"></script>
+<script src="../assets/js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <h1>内置组件-slot</h1>
+    <hr>
+	<div id="app">
+		<bbqwwb>
+			<span slot="url">{{bbqData.bolg}}</span><!-- 在HTML的组件中用slot属性传递值 -->
+			<span slot="name">bq</span><!-- 直接写值也行 -->
+			<span slot="skill">{{bbqData.skill}}</span>
+		</bbqwwb>
+	</div>
+	<!-- 用<template></template>标签的方式定义了组件 -->
+	<template id="tep">
+		<div>
+			<p>网址:<slot name="url"></slot></p><!-- 在组件模板中用<slot></slot>标签接收值 -->
+			<p>网名:<slot name="name"></slot></p>
+			<p>技能:<slot name="skill"></slot></p>		
+		</div>
+
+	</template>
+<script>
+	var bbqTemplate = {
+		template:"#tep"
+	}
+	var app = new Vue({
+		el:"#app",
+		data:{
+			bbqData:{
+				bolg:"http://baidu.com",
+				netName:"bbqwwb",
+				skill:"vue"
+			}
+		},
+		components:{
+			"bbqwwb":bbqTemplate
+		}
+	})
+</script>
+</body>
+</html>
