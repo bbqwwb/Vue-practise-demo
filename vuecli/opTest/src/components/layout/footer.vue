@@ -7,6 +7,6 @@
 
 <script>
 export default {
-  name: 'op-footer'
+  name: 'opFooter'
 }
 </script>

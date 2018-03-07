@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-      <op-header></op-header>
+      <opHeader></opHeader>
       <topbars></topbars>
       <div class="body">
         <div class="nav">
@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      <op-footer></op-footer>
+      <opFooter></opFooter>
     </div>
 </template>
 <script>

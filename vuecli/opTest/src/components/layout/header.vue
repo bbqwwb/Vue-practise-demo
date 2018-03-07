@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  name: 'op-header'
+  name: 'opHeader'
 }
 </script>
