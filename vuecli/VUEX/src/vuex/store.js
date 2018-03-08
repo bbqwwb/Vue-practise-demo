@@ -3,11 +3,11 @@ import Vuex from 'vuex'; //引入vuex
 
 Vue.use(Vuex);
 
-const state={
+const state={  //state访问状态对象
   count:6
 }
 
-const mutations={
+const mutations={  //Mutations修改状态
   add(state,n){
       state.count+=n;
   },
@@ -19,14 +19,14 @@ const mutations={
   }
 }
 
-const getters={
+const getters={  //getters计算过滤操作
   count:function(state){
     return state.count+=1;
   }
   //count:state=>state.count+=100 //ES6写法 箭头函数
 }
 
-const actions={
+const actions={  //actions异步修改状态
   addAction(context){  //context：上下文对象，这里你可以理解称store本身
     context.commit('add',10);
     setTimeout(()=>{context.commit('reduce',2)},3000);

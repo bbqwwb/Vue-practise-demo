@@ -2,23 +2,33 @@
   <div class="left-nav">
     <ul>
       <li>
-        <i class="iconfont icon-goumai"></i>
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-goumai"></use>
+        </svg>
         <p>收银</p>
       </li>
       <li>
-        <i class="iconfont icon-shangjia"></i>
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-shangjia"></use>
+        </svg>
         <p>店铺</p>
       </li>
       <li>
-        <i class="iconfont icon-canyin"></i>
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-canyin"></use>
+        </svg>
         <p>商品</p>
       </li>
       <li>
-        <i class="iconfont icon-quan"></i>
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-quan"></use>
+        </svg>
         <p>会员</p>
       </li>
       <li>
-        <i class="iconfont icon-tubiaofenxi"></i>
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-tubiaofenxi"></use>
+        </svg>
         <p>统计</p>
       </li>
     </ul>
@@ -38,9 +48,6 @@ export default {
   float: left;
   background: #1D8ce0;
 }
-.iconfont{
-  font-size: 24px;
-}
 .left-nav ul{
 padding:0;
 margin:0;
@@ -50,6 +57,12 @@ margin:0;
   text-align: center;
   border-bottom: 1px solid #20a0ff;
   padding:10px;
+}
+.icon {
+    width: 3em; height: 3em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
 }
 </style>
 
