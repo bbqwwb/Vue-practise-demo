@@ -9,13 +9,13 @@
               <el-table-column prop="count" label="数量" align="center" width="50"></el-table-column>
               <el-table-column prop="price" label="金额" align="center" width="70"></el-table-column>
               <el-table-column  label="操作" align="center" width="120" fixed="right">
-                <template slot-scope="scope">
+                <template slot-scope="scope"><!-- scope是element的固定写法 是模板作用域 用scope.row相当于把当前行的数据传入-->
                   <el-button type="text" size="small">删除</el-button>
-                  <el-button type="text" size="small">增加</el-button>
+                  <el-button type="text" size="small" @click="addOrderList(scope.row)">增加</el-button>
                 </template>
               </el-table-column>
             </el-table>
-            <div class="total">数量： 总金额：</div>
+            <div class="total">数量：{{totalCount}} 总金额：{{totalMoney}}</div>
             <div class="div-btn">
               <el-button type="warning">挂单</el-button>
               <el-button type="danger">删除</el-button>
@@ -30,7 +30,7 @@
         <div class="title">常用商品</div>
         <div class="often-goods-list">
           <ul>
-            <li v-for="goods in oftenGoods">
+            <li v-for="goods in oftenGoods" @click="addOrderList(goods)">
               <span>{{goods.goodsName}}</span>
               <span class="o-price">￥{{goods.price}}元</span>
             </li>
@@ -40,7 +40,7 @@
           <el-tabs>
             <el-tab-pane label="汉堡">
               <ul class='cookList'>
-                <li v-for="goods in type0Goods">
+                <li v-for="goods in type0Goods" @click="addOrderList(goods)">
                   <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
                   <span class="foodName">{{goods.goodsName}}</span>
                   <span class="foodPrice">￥{{goods.price}}元</span>
@@ -49,7 +49,7 @@
             </el-tab-pane>
             <el-tab-pane label="小食">
               <ul class='cookList'>
-                <li v-for="goods in type1Goods">
+                <li v-for="goods in type1Goods" @click="addOrderList(goods)">
                   <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
                   <span class="foodName">{{goods.goodsName}}</span>
                   <span class="foodPrice">￥{{goods.price}}元</span>
@@ -58,7 +58,7 @@
             </el-tab-pane>
             <el-tab-pane label="饮料">
               <ul class='cookList'>
-                <li v-for="goods in type2Goods">
+                <li v-for="goods in type2Goods" @click="addOrderList(goods)">
                   <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
                   <span class="foodName">{{goods.goodsName}}</span>
                   <span class="foodPrice">￥{{goods.price}}元</span>
@@ -67,7 +67,7 @@
             </el-tab-pane>
             <el-tab-pane label="套餐">
               <ul class='cookList'>
-                <li v-for="goods in type3Goods">
+                <li v-for="goods in type3Goods" @click="addOrderList(goods)">
                   <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
                   <span class="foodName">{{goods.goodsName}}</span>
                   <span class="foodPrice">￥{{goods.price}}元</span>
@@ -124,6 +124,36 @@ export default {
       console.log('网络错误 无法访问')
     });
   },
+  methods:{
+    //添加订单列表的方法
+    addOrderList(goods){
+      this.totalCount=0;
+      this.totalMoney=0;
+      let isHave = false;
+      //console.log(goods);
+      //判断这个商品是否已经存在于订单列表
+      for(let i=0; i<this.tableData.length; i++){
+        if(this.tableData[i].goodsId==goods.goodsId){
+          isHave = true;
+        }
+      }
+      //根据isHave的值判断订单列表中是否已经有此商品
+      if(isHave){
+        //存在就进行数量添加
+        let arr = this.tableData.filter(v=>v.goodsId==goods.goodsId)  //把存在的这个商品过滤出来
+        arr[0].count++;  //对它的count值进行++
+      }else{
+        //不存在就推入数组
+        let newGoods = {goodsId:goods.goodsId,goodsName:goods.goodsName,price:goods.price,count:1};
+        this.tableData.push(newGoods);
+      }
+      //进行数量和价格的汇总计算
+      this.tableData.forEach(v=>{
+        this.totalCount+=v.count;
+        this.totalMoney+=v.count*v.price;
+      })
+    }
+  }
   // mounted:function(){
   //   var orderHeight = document.body.clientHeight;
   //   document.getElementById("order-list").style.height = orderHeight+"px";
