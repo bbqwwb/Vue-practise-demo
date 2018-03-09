@@ -10,7 +10,7 @@
               <el-table-column prop="price" label="金额" align="center" width="70"></el-table-column>
               <el-table-column  label="操作" align="center" width="120" fixed="right">
                 <template slot-scope="scope"><!-- scope是element的固定写法 是模板作用域 用scope.row相当于把当前行的数据传入-->
-                  <el-button type="text" size="small">删除</el-button>
+                  <el-button type="text" size="small" @click="delSingleGood(scope.row)">删除</el-button>
                   <el-button type="text" size="small" @click="addOrderList(scope.row)">增加</el-button>
                 </template>
               </el-table-column>
@@ -18,8 +18,8 @@
             <div class="total">数量：{{totalCount}} 总金额：{{totalMoney}}</div>
             <div class="div-btn">
               <el-button type="warning">挂单</el-button>
-              <el-button type="danger">删除</el-button>
-              <el-button type="success">结账</el-button>
+              <el-button type="danger" @click="delAllGoods">删除</el-button>
+              <el-button type="success" @click="checkOut">结账</el-button>
             </div>
           </el-tab-pane>
           <el-tab-pane label="挂单" name="second">挂单</el-tab-pane>
@@ -81,158 +81,209 @@
   </div>
 </template>
 <script>
-import axios from 'axios' //哪里需要用 就在哪里引入
+import axios from "axios"; //哪里需要用 就在哪里引入
 export default {
-  name:'Pos',
-  data(){
-    return{
-      activeName: 'first',
-      tableData:[
+  name: "Pos",
+  data() {
+    return {
+      activeName: "first",
+      tableData: [
         // {
         //   goodsName:"可口可乐",
         //   count:100,
         //   price:3
         // }
       ],
-      oftenGoods:[],
-      type0Goods:[],
-      type1Goods:[],
-      type2Goods:[],
-      type3Goods:[],
-      totalCount:0,
-      totalMoney:0
-
-
-    }
+      oftenGoods: [],
+      type0Goods: [],
+      type1Goods: [],
+      type2Goods: [],
+      type3Goods: [],
+      totalCount: 0,
+      totalMoney: 0
+    };
   },
-  created:function(){
-    axios.get('http://jspang.com/DemoApi/oftenGoods.php')
-    .then(response=>{
-      this.oftenGoods = response.data;
-    })
-    .catch(error=>{
-      console.log('网络错误 无法访问')
-    });
-    axios.get('http://jspang.com/DemoApi/typeGoods.php')
-    .then(response=>{
-      this.type0Goods = response.data[0];
-      this.type1Goods = response.data[1];
-      this.type2Goods = response.data[2];
-      this.type3Goods = response.data[3];
-    })
-    .catch(error=>{
-      console.log('网络错误 无法访问')
-    });
+  created: function() {
+    axios
+      .get("http://jspang.com/DemoApi/oftenGoods.php")
+      .then(response => {
+        this.oftenGoods = response.data;
+      })
+      .catch(error => {
+        console.log("网络错误 无法访问");
+      });
+    axios
+      .get("http://jspang.com/DemoApi/typeGoods.php")
+      .then(response => {
+        this.type0Goods = response.data[0];
+        this.type1Goods = response.data[1];
+        this.type2Goods = response.data[2];
+        this.type3Goods = response.data[3];
+      })
+      .catch(error => {
+        console.log("网络错误 无法访问");
+      });
   },
-  methods:{
+  methods: {
+    //进行数量和价格的汇总计算的方法
+    getAllPrice() {
+      if (this.tableData) {
+        this.totalCount = 0; //先进行清零 避免叠加计算
+        this.totalMoney = 0;
+        this.tableData.forEach(v => {
+          this.totalCount += v.count;
+          this.totalMoney += v.count * v.price;
+        });
+      }
+    },
     //添加订单列表的方法
-    addOrderList(goods){
-      this.totalCount=0;
-      this.totalMoney=0;
+    addOrderList(goods) {
       let isHave = false;
       //console.log(goods);
       //判断这个商品是否已经存在于订单列表
-      for(let i=0; i<this.tableData.length; i++){
-        if(this.tableData[i].goodsId==goods.goodsId){
+      for (let i = 0; i < this.tableData.length; i++) {
+        if (this.tableData[i].goodsId == goods.goodsId) {
           isHave = true;
         }
       }
       //根据isHave的值判断订单列表中是否已经有此商品
-      if(isHave){
+      if (isHave) {
         //存在就进行数量添加
-        let arr = this.tableData.filter(v=>v.goodsId==goods.goodsId)  //把存在的这个商品过滤出来
-        arr[0].count++;  //对它的count值进行++
-      }else{
+        let arr = this.tableData.filter(v => v.goodsId == goods.goodsId); //把存在的这个商品过滤出来 v传入的就是调用filter的tableData
+        arr[0].count++; //对它的count值进行++
+      } else {
         //不存在就推入数组
-        let newGoods = {goodsId:goods.goodsId,goodsName:goods.goodsName,price:goods.price,count:1};
+        let newGoods = {
+          goodsId: goods.goodsId,
+          goodsName: goods.goodsName,
+          price: goods.price,
+          count: 1
+        };
         this.tableData.push(newGoods);
       }
-      //进行数量和价格的汇总计算
-      this.tableData.forEach(v=>{
-        this.totalCount+=v.count;
-        this.totalMoney+=v.count*v.price;
-      })
+      this.getAllPrice();
+    },
+    //删除单个商品
+    delSingleGood(goods) {
+      this.tableData = this.tableData.filter(v => v.goodsId !== goods.goodsId);
+      this.getAllPrice();
+    },
+    //删除所有商品
+    delAllGoods(){
+      this.tableData = [],
+      this.totalCount = 0;
+      this.totalMoney = 0;
+    },
+    //模拟结账
+    checkOut(){
+      if(this.totalCount!=0){
+        this.totalCount = 0;
+        this.totalMoney = 0;
+        this.tableData = [];
+        this.$message({
+          message:'结账成功，欢迎再次光临',
+          type:'success'
+        })
+      }else{
+        this.$message.error('订单为空，老板可以先添加商品哦')
+      }
+
     }
   }
   // mounted:function(){
   //   var orderHeight = document.body.clientHeight;
   //   document.getElementById("order-list").style.height = orderHeight+"px";
   // }
-}
+};
 </script>
 <style>
-.pos-layout{height: 100%;}
-.pos-layout .el-row{height: 100%;}
-.pos-order{ background: #f9fafc; border-right: 1px solid #c0ccda;height: 100%; min-height: 658px;}
-#tab-first{margin-left: 20px;}
-.el-tabs__active-bar{left:20px;}
-.div-btn{margin-top: 10px;}
-.title{
-      height: 20px;
-      border-bottom:1px solid #D3DCE6;
-      background-color: #F9FAFC;
-      padding:10px;
-  }
-.often-goods-list ul li{
+.pos-layout {
+  height: 100%;
+}
+.pos-layout .el-row {
+  height: 100%;
+}
+.pos-order {
+  background: #f9fafc;
+  border-right: 1px solid #c0ccda;
+  height: 100%;
+  min-height: 658px;
+}
+#tab-first {
+  margin-left: 20px;
+}
+.el-tabs__active-bar {
+  left: 20px;
+}
+.div-btn {
+  margin-top: 10px;
+}
+.title {
+  height: 20px;
+  border-bottom: 1px solid #d3dce6;
+  background-color: #f9fafc;
+  padding: 10px;
+}
+.often-goods-list ul li {
   list-style: none;
-  float:left;
-  border:1px solid #E5E9F2;
-  padding:10px;
-  margin:5px;
-  background-color:#fff;
+  float: left;
+  border: 1px solid #e5e9f2;
+  padding: 10px;
+  margin: 5px;
+  background-color: #fff;
   cursor: pointer;
 }
-.o-price{
-    color:#58B7FF;
-  }
-.goods-type{
+.o-price {
+  color: #58b7ff;
+}
+.goods-type {
   clear: both;
 }
-#tab-0{margin-left: 20px;}
-.cookList{
+#tab-0 {
+  margin-left: 20px;
+}
+.cookList {
   padding: 20px 4%;
   float: left;
   width: 92%;
 }
-.cookList li{
-    list-style: none;
-    width:23%;
-    border:1px solid #E5E9F2;
-    height: auto;
-    overflow: hidden;
-    background-color:#fff;
-    padding: 2px;
-    float:left;
-    margin: 5px;
-    cursor: pointer;
-
+.cookList li {
+  list-style: none;
+  width: 23%;
+  border: 1px solid #e5e9f2;
+  height: auto;
+  overflow: hidden;
+  background-color: #fff;
+  padding: 2px;
+  float: left;
+  margin: 5px;
+  cursor: pointer;
 }
-.cookList li span{
-
-    display: block;
-    float:left;
+.cookList li span {
+  display: block;
+  float: left;
 }
-.foodImg{
-    width: 40%;
+.foodImg {
+  width: 40%;
 }
-.foodName{
-    font-size: 18px;
-    color:brown;
-    padding-top:5px;
-    width: 56%;
-    margin-left: 4%;
-    text-align: left;
+.foodName {
+  font-size: 18px;
+  color: brown;
+  padding-top: 5px;
+  width: 56%;
+  margin-left: 4%;
+  text-align: left;
 }
-.foodPrice{
-    font-size: 16px;
-    padding-top:10px;
-    width: 56%;
-    margin-left: 4%;
-    text-align: left;
+.foodPrice {
+  font-size: 16px;
+  padding-top: 10px;
+  width: 56%;
+  margin-left: 4%;
+  text-align: left;
 }
-.total{
+.total {
   background: #fff;
-  padding:20px 0;
+  padding: 20px 0;
   border-bottom: 1px solid #ebeef5;
 }
 </style>
