@@ -212,7 +212,7 @@ export default {
 #tab-first {
   margin-left: 20px;
 }
-.el-tabs__active-bar {
+.pos-order .el-tabs__active-bar {
   left: 20px;
 }
 .div-btn {
@@ -238,6 +238,9 @@ export default {
 }
 .goods-type {
   clear: both;
+}
+.goods-type .el-tabs__active-bar{
+  margin-left: 20px;
 }
 #tab-0 {
   margin-left: 20px;
