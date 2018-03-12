@@ -19,7 +19,7 @@
       <router-link to="/asdakbj">404</router-link> |
     </div>
 
-    <p>{{ $route.name}}</p>
+    <p>{{ $route.name}}</p><!-- </p>用name传递参数 router index.js里routes设置的name可以直接在这里接收并显示-->
 
     <transition name="fademode" mode="out-in">
       <router-view/>

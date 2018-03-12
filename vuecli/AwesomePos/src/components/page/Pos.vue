@@ -76,6 +76,8 @@
             </el-tab-pane>
           </el-tabs>
         </div>
+        <!-- iview组件 -->
+        <Tree :data="data1"></Tree>
       </el-col>
     </el-row>
   </div>
@@ -100,7 +102,42 @@ export default {
       type2Goods: [],
       type3Goods: [],
       totalCount: 0,
-      totalMoney: 0
+      totalMoney: 0,
+
+      //iview组件数据
+      data1: [
+        {
+          title: "parent 1",
+          expand: false,
+          children: [
+            {
+              title: "parent 1-1",
+              expand: true,
+              children: [
+                {
+                  title: "leaf 1-1-1"
+                },
+                {
+                  title: "leaf 1-1-2"
+                }
+              ]
+            },
+            {
+              title: "parent 1-2",
+              expand: false,
+              children: [
+                {
+                  title: "leaf 1-2-1"
+                },
+                {
+                  title: "leaf 1-2-1"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+
     };
   },
   created: function() {
@@ -169,25 +206,23 @@ export default {
       this.getAllPrice();
     },
     //删除所有商品
-    delAllGoods(){
-      this.tableData = [],
-      this.totalCount = 0;
+    delAllGoods() {
+      (this.tableData = []), (this.totalCount = 0);
       this.totalMoney = 0;
     },
     //模拟结账
-    checkOut(){
-      if(this.totalCount!=0){
+    checkOut() {
+      if (this.totalCount != 0) {
         this.totalCount = 0;
         this.totalMoney = 0;
         this.tableData = [];
         this.$message({
-          message:'结账成功，欢迎再次光临',
-          type:'success'
-        })
-      }else{
-        this.$message.error('订单为空，老板可以先添加商品哦')
+          message: "结账成功，欢迎再次光临",
+          type: "success"
+        });
+      } else {
+        this.$message.error("订单为空，老板可以先添加商品哦");
       }
-
     }
   }
   // mounted:function(){
@@ -219,7 +254,6 @@ export default {
   margin-top: 10px;
 }
 .title {
-  height: 20px;
   border-bottom: 1px solid #d3dce6;
   background-color: #f9fafc;
   padding: 10px;
@@ -239,7 +273,7 @@ export default {
 .goods-type {
   clear: both;
 }
-.goods-type .el-tabs__active-bar{
+.goods-type .el-tabs__active-bar {
   margin-left: 20px;
 }
 #tab-0 {

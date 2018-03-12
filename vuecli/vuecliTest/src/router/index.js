@@ -16,7 +16,7 @@ export default new Router({
       path: '/',
       name: 'HelloWorld',
       components: {
-        default:HelloWorld,
+        default:HelloWorld, //单页面多路由区域操作 一个页面里我们有2个以上<router-view>区域
         left:Hi1,
         right:Hi2
       }
@@ -25,7 +25,7 @@ export default new Router({
       // name: 'Hi',
       component:Hi,
       children:[
-        {path:'/',name:'hi',component:Hi},
+        {path:'/',name:'hi',component:Hi},  //子路由配置
         {path:'hi1',name:'hi1',component:Hi1},
         {path:'hi2',name:'hi2',component:Hi2}
       ]
