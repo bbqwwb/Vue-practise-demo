@@ -30,18 +30,18 @@ export default new Router({
         {path:'hi2',name:'hi2',component:Hi2}
       ]
     },{
-      path:"/params/:id(\\d+)/:title",
+      path:"/params/:id(\\d+)/:title",//vue-router  用url传递参数
       component:params
     },{
-      path:"/goHome",
+      path:"/goHome",  //重定向
       redirect:"/"
     },{
-      path:"/goParams/:id(\\d+)/:title",
+      path:"/goParams/:id(\\d+)/:title",  //带参数重定向
       redirect:"/params/:id(\\d+)/:title"
     },{
       path:'/hi',
       component:Hi,
-      alias:'/bbqwwb'
+      alias:'/bbqwwb'  //别名     url显示这个  但是实际<router-view/>里的内容是hi的
     },{
       path: '/',
       name: 'HelloWorld',
