@@ -16,7 +16,7 @@ export default {
     console.log('进入');
     console.log(to);
     console.log(from);
-    next();
+    next(); //控制跳转 没有的话不能跳转
   },
   beforeRouteLeave:(to,from,next)=>{
     console.log('离开');
