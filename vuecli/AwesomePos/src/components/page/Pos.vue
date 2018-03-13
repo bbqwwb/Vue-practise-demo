@@ -77,7 +77,7 @@
           </el-tabs>
         </div>
         <!-- iview组件 -->
-        <Tree :data="data1"></Tree>
+        <!-- <Tree :data="data1"></Tree> -->
       </el-col>
     </el-row>
   </div>
@@ -105,38 +105,38 @@ export default {
       totalMoney: 0,
 
       //iview组件数据
-      data1: [
-        {
-          title: "parent 1",
-          expand: false,
-          children: [
-            {
-              title: "parent 1-1",
-              expand: true,
-              children: [
-                {
-                  title: "leaf 1-1-1"
-                },
-                {
-                  title: "leaf 1-1-2"
-                }
-              ]
-            },
-            {
-              title: "parent 1-2",
-              expand: false,
-              children: [
-                {
-                  title: "leaf 1-2-1"
-                },
-                {
-                  title: "leaf 1-2-1"
-                }
-              ]
-            }
-          ]
-        }
-      ],
+      // data1: [
+      //   {
+      //     title: "测试",
+      //     expand: false,
+      //     children: [
+      //       {
+      //         title: "parent 1-1",
+      //         expand: true,
+      //         children: [
+      //           {
+      //             title: "leaf 1-1-1"
+      //           },
+      //           {
+      //             title: "leaf 1-1-2"
+      //           }
+      //         ]
+      //       },
+      //       {
+      //         title: "parent 1-2",
+      //         expand: false,
+      //         children: [
+      //           {
+      //             title: "leaf 1-2-1"
+      //           },
+      //           {
+      //             title: "leaf 1-2-1"
+      //           }
+      //         ]
+      //       }
+      //     ]
+      //   }
+      // ],
 
     };
   },

@@ -12,6 +12,8 @@ import iview from 'iview'
 import 'iview/dist/styles/iview.css'
 Vue.use(iview)
 
+import './assets/js/font_581854_l1o8eirtuofos9k9'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
